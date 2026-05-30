@@ -18,7 +18,22 @@
     <section class="section">
       <div class="container">
         <div class="services-grid">
-          <div v-for="(svc, i) in services" :key="svc.title" class="service-card card" :style="`animation-delay:${i * 0.08}s`">
+          <div
+            v-for="(svc, i) in services"
+            :key="svc.title"
+            class="service-card card"
+            :style="`animation-delay:${i * 0.08}s`"
+          >
+            <div v-if="svc.videoUrl" class="service-card__video">
+              <video
+                :src="svc.videoUrl"
+                autoplay
+                muted
+                loop
+                playsinline
+              />
+            </div>
+
             <div class="service-card__header">
               <div class="service-card__icon-wrap">
                 <span>{{ svc.icon }}</span>
@@ -43,7 +58,9 @@
                 <span class="service-card__price-label">Starting from</span>
                 <span class="service-card__price">{{ svc.price }}</span>
               </div>
-              <NuxtLink to="/appointment" class="btn btn-primary">Book Now</NuxtLink>
+              <div class="service-card__actions">
+                <NuxtLink to="/appointment" class="btn btn-primary" @click.stop>Book Now</NuxtLink>
+              </div>
             </div>
           </div>
         </div>
@@ -83,6 +100,7 @@ const services = [
     icon: '✨', title: 'Teeth Whitening', category: 'Cosmetic', price: '€200',
     badgeBg: '#fdf4ff', badgeColor: '#9333ea',
     desc: 'Professional in-office whitening using certified bleaching agents that lift stains up to 8 shades in a single 90-minute session.',
+    videoUrl: '/videos/teeth-whitening.mp4',
     features: ['Up to 8 shades lighter', 'Safe LED activation', '90-minute session', 'Take-home maintenance kit'],
   },
   {
@@ -104,6 +122,7 @@ const services = [
     features: ['Painless under anesthesia', 'Rotary file technology', 'Single or multi-visit', 'Crown restoration option'],
   },
 ]
+
 
 const infoItems = [
   { icon: '📋', title: 'Free Consultation', desc: 'Your first exam and treatment plan is always free.' },
@@ -152,6 +171,22 @@ const infoItems = [
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
+  overflow: hidden;
+}
+
+.service-card__video {
+  margin: -2rem -2rem 0;
+  height: 160px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+  background: var(--gray-100);
+}
+
+.service-card__video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .service-card__header {
@@ -216,6 +251,13 @@ const infoItems = [
   border-top: 1px solid var(--gray-100);
   margin-top: auto;
 }
+
+.service-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 
 .service-card__price-label {
   display: block;
