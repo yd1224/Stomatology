@@ -24,7 +24,7 @@
             class="service-card card"
             :style="`animation-delay:${i * 0.08}s`"
           >
-            <div v-if="svc.videoUrl" class="service-card__video">
+            <div v-if="svc.videoUrl" class="service-card__video" @click="openVideo(svc.videoUrl)">
               <video
                 :src="svc.videoUrl"
                 autoplay
@@ -83,17 +83,23 @@
 <script setup>
 useHead({ title: 'Services — DentaCare Premium' })
 
+function openVideo(url) {
+  window.open(url, '_blank')
+}
+
 const services = [
   {
     icon: '🦷', title: 'Teeth Cleaning', category: 'Prevention', price: '€50',
     badgeBg: '#eff6ff', badgeColor: '#2563eb',
     desc: 'Professional ultrasonic scaling and polishing that removes hardened tartar, surface stains, and bacteria to restore your natural shine.',
+    videoUrl: '/videos/teeth-cleaning.mp4',
     features: ['Ultrasonic scaling', 'Polishing & stain removal', 'Fluoride treatment', 'Oral hygiene advice'],
   },
   {
     icon: '🔍', title: 'Caries Treatment', category: 'Prevention', price: '€120',
     badgeBg: '#eff6ff', badgeColor: '#2563eb',
     desc: 'Early detection and treatment of tooth decay using tooth-colored composite fillings that blend seamlessly with your natural teeth.',
+    videoUrl: '/videos/carries-treatment.mp4',
     features: ['Digital X-ray diagnosis', 'Composite (white) filling', 'Minimally invasive', 'Same-day treatment'],
   },
   {
@@ -180,6 +186,7 @@ const infoItems = [
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
   background: var(--gray-100);
+  cursor: pointer;
 }
 
 .service-card__video video {
